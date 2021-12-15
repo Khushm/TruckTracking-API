@@ -43,7 +43,7 @@ def warehouse_data(data: ware_house_data):
 
         print('Zone is : ', data.zone_no)
 
-        meta_data = {"zone_no": data.zone_no, "from_time": convert_to_string(data.from_time), "to_time": convert_to_string(data.to_time)}
+        meta_data = {"zone_no": data.zone_no, "from_time": data.from_time, "to_time": data.to_time}
         # data_list = Call mongo data for zone and from_time to to_time
         data_list = get_mongo_data(mongo_coll, meta_data)
         print(data_list)
