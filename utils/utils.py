@@ -1,15 +1,16 @@
 from loguru import logger
+from datetime import datetime
 
 
 def get_mongo_data(conn, meta_data):
     try:
         query_data_list = conn.find({
-            "Zone": meta_data["zone_no"],
-            "From_Time".split(".")[0]: meta_data["from_date"],
-            "To_Time".split(".")[0]: meta_data["to_date"]
-
-            # "From_Time": {"$gt": meta_data["from_date"]},
-            # "To_Time": {"$lt": meta_data["to_date"]}
+            'datetime_local': {
+                '$gte': datetime.strptime(meta_data['from_time'], "%Y-%m-%dT%H:%M:%S.364Z"),
+                '$lte': datetime.strptime(meta_data['to_time'], "%Y-%m-%dT%H:%M:%S.364Z"),
+            },
+            'panel_no': meta_data['panel_no'],
+            'channel_no': meta_data['camera_no']
         })
         return query_data_list
     except Exception as e:
